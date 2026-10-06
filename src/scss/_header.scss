@@ -28,3 +28,18 @@
     margin: 20px 10px 20px 0px;
   }
 }
+
+// The page title is long; at the default h2 size it runs to eight lines on a
+// phone. Step it down below 640px (the subtitle scales with it).
+@media (max-width: 639px) {
+  .header-curve .uk-h1,
+  .header-curve .uk-h2 {
+    font-size: 1.6rem;
+  }
+}
+
+// Subtitle after the colon in the page title: smaller than the main title.
+.header-subtitle {
+  font-size: 0.5em;
+  line-height: 1.35;
+}

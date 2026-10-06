@@ -1,0 +1,26 @@
+// Justified body text. Ragged right edges looked uneven in the Overview and the
+// body sections, so paragraphs in the main column (.main-content, not the
+// header with the title) are set flush on both sides.
+// Hyphenation (needs <html lang="en">, set in index.html) keeps justification
+// from opening wide gaps between words. Centred paragraphs (the TL;DR line) are
+// left as they are.
+//
+// Below 640px a line holds only five or six words, and justification opens
+// wide gaps wherever the browser cannot hyphenate, so phones keep the default
+// left alignment.
+@media (min-width: 640px) {
+  .main-content p:not(.uk-text-center),
+  .main-content li {
+    text-align: justify;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+    // Split only words of 6+ letters, leaving at least 3 on each side.
+    hyphenate-limit-chars: 6 3 3;
+  }
+}
+
+// Avoid a lone short word on the last line of a paragraph, on every screen.
+.main-content p,
+.main-content li {
+  text-wrap: pretty;
+}

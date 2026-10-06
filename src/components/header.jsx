@@ -67,8 +67,14 @@ class ResourceBtn extends React.Component {
 
 export default class Header extends React.Component {
   render() {
+    // Split "Main: Subtitle" so the part before the colon stands out on its
+    // own line at a larger size and the subtitle follows in a smaller one.
+    const colon = this.props.title.indexOf(': ');
+    const mainTitle =
+      colon > 0 ? this.props.title.slice(0, colon) : this.props.title;
+    const subTitle = colon > 0 ? this.props.title.slice(colon + 2) : null;
     const titleClass = `uk-${
-      this.props.title.length > 15 ? 'h2' : 'h1'
+      subTitle || this.props.title.length <= 15 ? 'h1' : 'h2'
     } uk-text-primary`;
     const baseStyle = this.props.header?.bg_image
       ? {
@@ -99,7 +105,14 @@ export default class Header extends React.Component {
           <div className="header-curve" style={curveStyle}>
             <div className="uk-container uk-container-small uk-section">
               <div className="uk-text-center uk-text-bold">
-                <p className={titleClass}>{this.props.title}</p>
+                <p className={titleClass}>
+                  {mainTitle}
+                  {subTitle && (
+                    <span className="header-subtitle uk-display-block uk-margin-small-top">
+                      {subTitle}
+                    </span>
+                  )}
+                </p>
                 <span
                   className="uk-label uk-label-primary uk-text-center uk-margin-small-bottom"
                   style={{ fontFamily: 'Poppins' }}
