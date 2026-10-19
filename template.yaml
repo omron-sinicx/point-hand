@@ -116,10 +116,10 @@ body:
   - title: Results
     text: |
       #### Study 1: demonstrations collected by the operators
-      Novices shown KP-Salient succeeded in 73.5% of their trials on average, against 53.3% for those shown the real shape, and collected 441 successful demonstrations from 600 trials, against 320.
+      Novices (six per condition) shown KP-Salient succeeded in 73.5% of their trials on average, against 53.3% for those shown the real shape, and collected 441 successful demonstrations from 600 trials, against 320.
 
       <img src="result_study1.png" class="uk-align-center" style="width: 100%; max-width: 480px" alt="Success rate during collection per condition" />
-      <span class="uk-text-meta">Success rate during collection, one value per participant (n = 6/6/6/4).</span>
+      <span class="uk-text-meta">Success rate during collection, one value per participant.</span>
 
       #### Study 2: success rate of the policies trained on them
       The same KP-Salient demonstrations were the weakest of the three novice conditions under DP3 within 400 steps and the strongest under <span class="uk-text-nowrap">DP-KP</span>.
