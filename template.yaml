@@ -157,6 +157,4 @@ body:
       **A shared representation pays off on both sides only when it is designed well.**
       KP-Salient gave the lowest Mental Demand and 441 successful demonstrations of 600 trials (320 with the real shape), and trained the strongest <span class="uk-text-nowrap">DP-KP</span> within 200 and 400 steps.
       KP-Standard shared the same keypoints with the policy, yet its operators carried the highest Mental Demand and its demonstrations were the weakest under <span class="uk-text-nowrap">DP-KP</span>.
-
-      <span class="uk-text-meta">Evidence from one task, one robot hand, and one participant pool per condition.</span>
 projects:
