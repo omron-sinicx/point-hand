@@ -8,9 +8,8 @@ resources:
   paper: # TODO(human): https://arxiv.org/abs/XXXX.XXXXX once the preprint is posted
   poster:
   code:
-  # Temporary: Google Drive preview of the ICRA supplementary video. Move to
-  # YouTube or public/ before announcing (Drive throttles busy files).
-  video: https://drive.google.com/file/d/13Sjv-upduBf6SFFnU5vVVDx9k2V-MjKF/preview
+  # Unlisted on the OMRON SINIC X channel (https://youtu.be/XYWDglNkfMA).
+  video: https://www.youtube.com/embed/XYWDglNkfMA
   blog:
   demo:
   huggingface:
@@ -22,14 +21,17 @@ authors:
   - name: Amane Yamaguchi
     affiliation: [1, 2]
     mark: '*'
+    url: https://www.cyber.t.u-tokyo.ac.jp/
   - name: Shohei Kamiguchi
     affiliation: [1]
     mark: '*'
+    url: https://saiten.cc/
   - name: Masashi Hamaya
     affiliation: [1]
     url: https://sites.google.com/view/masashihamaya/home
   - name: Shigeo Yoshida
     affiliation: [1]
+    url: https://shigeodayo.me
   - name: Takuji Narumi
     affiliation: [2]
     url: https://www.cyber.t.u-tokyo.ac.jp/
@@ -68,32 +70,58 @@ overview: |
   A shared representation can pay off on both sides, in the number of successful demonstrations and in the success rate of the policy trained on them.
 
 body:
-  - title: Visual Representation
+  - title: 'PointHand: The Hand as Sparse Keypoints'
     text: |
-      PointHand replaces the robot hand shown to the operator with sparse keypoints at the fingertips and at the joints that bend each finger.
-      We compare three renderings of the same hand: its real shape (Baseline), all keypoints emphasized (KP-Standard), and only the keypoints of the thumb and index finger emphasized (KP-Salient).
+      PointHand replaces the robot hand shown to the operator with sparse keypoints at the fingertips and at the joints that bend each finger, the same keypoints a policy can observe.
       Emphasized keypoints have a per-finger color that brightens when the finger comes close to the object, so the rendering also carries a contact cue.
+      We compare two keypoint renderings with the real shape of the hand. The colors below are the ones used for each condition in the result graphs.
 
-      <img src="conditions.png" class="uk-align-center uk-responsive-width" alt="The robot hand rendered as its real shape, as keypoints with all emphasized, and as keypoints with only the thumb and index finger emphasized" />
-      <span class="uk-text-meta">Robot hand presented to the operator: real shape (left, Baseline), all keypoints emphasized (center, KP-Standard), and only those of the thumb and index finger emphasized (right, KP-Salient). Fingertip keypoints are spheres and intermediate joint keypoints cubes. The others and the wrist keypoint, which the policy does not receive, are gray.</span>
-  - title: Policy Learning
+      <div class="uk-child-width-1-3 uk-grid-small" uk-grid>
+        <div>
+          <img src="cond_baseline.png" class="uk-responsive-width" style="border-bottom: 5px solid #5C6BC0" alt="The robot hand rendered as its real shape" />
+          <div class="uk-text-small uk-margin-small-top" style="text-align: center">
+            <span style="display: inline-block; width: 0.8em; height: 0.8em; background: #5C6BC0; vertical-align: baseline"></span>
+            <b>Baseline</b><br /><span class="uk-text-muted">real shape</span>
+          </div>
+        </div>
+        <div>
+          <img src="cond_kp_standard.png" class="uk-responsive-width" style="border-bottom: 5px solid #26A69A" alt="The robot hand rendered as keypoints with all keypoints emphasized" />
+          <div class="uk-text-small uk-margin-small-top" style="text-align: center">
+            <span style="display: inline-block; width: 0.8em; height: 0.8em; background: #26A69A; vertical-align: baseline"></span>
+            <b>KP-Standard</b><br /><span class="uk-text-muted">all keypoints emphasized</span>
+          </div>
+        </div>
+        <div>
+          <img src="cond_kp_salient.png" class="uk-responsive-width" style="border-bottom: 5px solid #FF7043" alt="The robot hand rendered as keypoints with only the thumb and index finger emphasized" />
+          <div class="uk-text-small uk-margin-small-top" style="text-align: center">
+            <span style="display: inline-block; width: 0.8em; height: 0.8em; background: #FF7043; vertical-align: baseline"></span>
+            <b>KP-Salient</b><br /><span class="uk-text-muted">thumb and index finger emphasized</span>
+          </div>
+        </div>
+      </div>
+      <span class="uk-text-meta">Fingertip keypoints are spheres and intermediate joint keypoints cubes. Keypoints that are not emphasized, and the wrist keypoint, which the policy does not receive, are gray. The experts used the real-shape rendering (Expert, brown in the graphs).</span>
+  - title: Experiment
     text: |
-      The keypoint positions are recorded with every demonstration, whether or not they were shown to the operator, so the same demonstrations can train two policies.
-      DP3 observes the dense scene point cloud and the proprioceptive state.
-      <span class="uk-text-nowrap">DP-KP</span> replaces both inputs with the hand keypoints and two object keypoints, and encodes each keypoint as one Transformer token so that the correspondence between tokens and robot parts is preserved.
-      Both condition a diffusion head of the same architecture and share the training procedure.
+      We investigated how the demonstrations, and the policies trained on them, differ between PointHand and the real shape of the hand in a simulated mug-in-box task.
+
+      **Study 1: collecting demonstrations.** 18 novices, six per rendering, and 4 experts shown the real shape each teleoperated the robot hand for 100 trials, 2,200 trials in total.
+
+      **Study 2: training policies.** From the successful demonstrations of each condition we trained two diffusion policies on the same demonstrations, which record the keypoint positions whether or not they were shown to the operator.
+      DP3 observes the scene point cloud and the proprioceptive state.
+      <span class="uk-text-nowrap">DP-KP</span> observes the hand keypoints and two object keypoints instead.
+      Both share the diffusion head and the training procedure.
 
       <img src="policy.png" class="uk-align-center uk-responsive-width" alt="Observation encoders of DP3 and DP-KP" />
       <span class="uk-text-meta">Observation encoding of the two policies. Top: DP3 uses the encoder of <a href="https://arxiv.org/abs/2403.03954">3D Diffusion Policy</a> (Ze et al., RSS 2024) on the scene point cloud and the state. Bottom: <span class="uk-text-nowrap">DP-KP</span> uses the encoder of <a href="https://arxiv.org/abs/2502.20391">Point Policy</a> (Haldar and Pinto, CoRL 2025) on the hand and object keypoints.</span>
   - title: Results
     text: |
-      #### Demonstrations collected by the operators
+      #### Study 1: demonstrations collected by the operators
       Novices shown KP-Salient succeeded in 73.5% of their trials on average, against 53.3% for those shown the real shape, and collected 441 successful demonstrations from 600 trials, against 320.
 
       <img src="result_study1.png" class="uk-align-center" style="width: 100%; max-width: 480px" alt="Success rate during collection per condition" />
       <span class="uk-text-meta">Success rate during collection, one value per participant (n = 6/6/6/4).</span>
 
-      #### Success rate of the policies trained on them
+      #### Study 2: success rate of the policies trained on them
       The same KP-Salient demonstrations were the weakest of the three novice conditions under DP3 within 400 steps and the strongest under <span class="uk-text-nowrap">DP-KP</span>.
 
       <div class="uk-overflow-auto">
@@ -123,27 +151,12 @@ body:
       <span class="uk-text-meta">Simulated success rate within 200, 400, and 600 steps, one panel per policy and one bar per collection condition. Error bars show the seed-to-seed standard deviation.</span>
   - title: Discussion
     text: |
-      #### Implications
-      The rendering shown during collection and the observation of the policy are worth choosing together.
+      **Choose the rendering and the policy's observation together.**
       The same KP-Salient demonstrations were the weakest of the three novice conditions under DP3 within 400 steps (46.3%) and the strongest under <span class="uk-text-nowrap">DP-KP</span> (57.3%).
-      A representation shared by the operator and the policy can also pay off on both sides at once, but only when it is designed well.
-      For KP-Salient it paid off in the workload and the number of demonstrations during collection and in the success rate of <span class="uk-text-nowrap">DP-KP</span> afterwards.
-      These results come from one task, one robot hand, and one participant pool per condition.
 
-      #### Why did the keypoints help the operators?
-      Under the keypoint renderings the rotation and finger paths were about 5 to 9% shorter than under the real shape, a difference within the between-participant spread.
-      Two explanations fit it equally well: removing the self-occlusion that makes the operator move the hand aside to see behind it, and the visual contact cue.
-      What separates the two keypoint conditions is perceptual load.
-      KP-Salient reached a higher success rate during collection than KP-Standard and carried the lowest Mental Demand, while all four conditions used the middle, ring, and little fingers about 1.3 to 1.4 times as much as the thumb and index finger, so the emphasis did not suppress particular fingers.
+      **A shared representation pays off on both sides only when it is designed well.**
+      KP-Salient gave the lowest Mental Demand and 441 successful demonstrations of 600 trials (320 with the real shape), and trained the strongest <span class="uk-text-nowrap">DP-KP</span> within 200 and 400 steps.
+      KP-Standard shared the same keypoints with the policy, yet its operators carried the highest Mental Demand and its demonstrations were the weakest under <span class="uk-text-nowrap">DP-KP</span>.
 
-      #### Sharing alone is not the point
-      Neither policy followed the predicted order Baseline < KP-Standard < KP-Salient.
-      Of the two conditions in which the operator saw the keypoints the policy receives, only the one that emphasized the thumb and index finger gained under <span class="uk-text-nowrap">DP-KP</span>.
-      Which collection condition produced the better policy depended on the policy's observation.
-
-      #### Limitations and future work
-      Which keypoints to place and emphasize is still chosen by hand.
-      Most participants moved the four fingers other than the thumb together, a grouping that differs from our emphasis, and another task, hand, or gripper will likely call for a different placement, so the keypoints should be designed automatically, for instance from a few demonstrations.
-      The keypoints convey contact only by brightness and cannot show grip force or slip, and the rendering was manipulated only in simulation.
-      On a physical robot the hand has to be removed from the camera image in real time, for which object removal with 3D Gaussian Splatting is a promising means.
+      <span class="uk-text-meta">Evidence from one task, one robot hand, and one participant pool per condition.</span>
 projects:

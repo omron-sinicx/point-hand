@@ -21,10 +21,9 @@ export default class Video extends React.Component {
       position: 'absolute',
     };
     return (
-      <div className="uk-section">
-        <h2 className="uk-heading-line uk-text-center" id="video">
-          Video
-        </h2>
+      <div className="uk-section uk-padding-remove-top">
+        {/* No heading: the video is the Overview in video form, right below it. */}
+        <span id="video" />
         <div style={wrapperClass}>
           <iframe
             style={innerClass}
