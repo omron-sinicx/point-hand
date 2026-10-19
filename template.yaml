@@ -147,7 +147,6 @@ body:
       <span class="uk-text-meta">Simulated success rate [%] within 200, 400, and 600 steps, mean over five seeds. Bold marks the highest value among the three novice conditions in each column.</span>
 
       <img src="result_study2.png" class="uk-align-center uk-responsive-width" alt="Simulated success rate of DP3 and DP-KP per collection condition" />
-      <span class="uk-text-meta">Simulated success rate within 200, 400, and 600 steps, one panel per policy and one bar per collection condition.</span>
   - title: Discussion
     text: |
       **Choose the rendering and the policy's observation together.**
