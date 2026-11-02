@@ -113,13 +113,11 @@ body:
       <img src="policy.png" class="uk-align-center uk-responsive-width" alt="Observation encoders of DP3 and DP-KP" />
       <span class="uk-text-meta">Observation encoding of the two policies. Top: DP3 uses the encoder of <a href="https://arxiv.org/abs/2403.03954">3D Diffusion Policy</a> (Ze et al., RSS 2024) on the scene point cloud and the state. Bottom: <span class="uk-text-nowrap">DP-KP</span> uses the encoder of <a href="https://arxiv.org/abs/2502.20391">Point Policy</a> (Haldar and Pinto, CoRL 2025) on the hand and object keypoints.</span>
 
-      <!-- Study 3 is hidden until the photo of the physical setup arrives.
-      Remove this comment line and the closing one, and add the photo below.
-
       **Study 3: a physical robot (preliminary).** We transferred the policies to a UR5e arm with an Inspire Hand.
       For each collection condition and policy, one policy pre-trained on all successful demonstrations of that condition was fine-tuned on five demonstrations collected on the physical robot.
       The object keypoints were obtained by fitting a cylinder to the depth points.
-      -->
+
+      <img src="study3_setup.jpg" class="uk-align-center" style="width: 100%; max-width: 640px" alt="Physical setup: a UR5e arm with an Inspire Hand, a red mug, and a box on the table" />
   - title: Results
     text: |
       #### Study 1: demonstrations collected by the operators
@@ -155,12 +153,19 @@ body:
 
       <img src="result_study2.png" class="uk-align-center uk-responsive-width" alt="Simulated success rate of DP3 and DP-KP per collection condition" />
 
-      <!-- Study 3 is hidden until the photo arrives (see the Experiment section).
-
       #### Study 3: a physical robot
       Each policy was evaluated in 10 trials on the physical robot.
       The video above shows the success counts of all eight policies.
-      -->
+
+      <div class="uk-flex uk-flex-middle uk-margin-medium-bottom">
+        <img src="study3_seq_1.jpg" alt="Reach" style="flex: 1 1 0; min-width: 0" />
+        <span style="flex: none; padding: 0 4px; font-size: 1.6rem; font-weight: 600; line-height: 1">&rsaquo;</span>
+        <img src="study3_seq_2.jpg" alt="Lift" style="flex: 1 1 0; min-width: 0" />
+        <span style="flex: none; padding: 0 4px; font-size: 1.6rem; font-weight: 600; line-height: 1">&rsaquo;</span>
+        <img src="study3_seq_3.jpg" alt="Carry" style="flex: 1 1 0; min-width: 0" />
+        <span style="flex: none; padding: 0 4px; font-size: 1.6rem; font-weight: 600; line-height: 1">&rsaquo;</span>
+        <img src="study3_seq_4.jpg" alt="Release" style="flex: 1 1 0; min-width: 0" />
+      </div>
   - title: Discussion
     text: |
       **Choose the rendering and the policy's observation together.**
